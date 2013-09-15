@@ -1,0 +1,30 @@
+{
+	"name" : "web-osuflow",
+	"version" : "0.1.0",
+	"author" : "Wenbin He <hewenbin.495@gmail.com>",
+	"description" : "Web-osuflow's http and socket.io server.",
+	"contributors" : [
+		{
+			"name" : "Ayan Biswas",
+			"email" : "ayanju04@gmail.com"
+		},
+		{
+			"name" : "Han-Wei Shen",
+			"email" : "hwshen@cse.ohio-state.edu"
+		}
+	],
+	"repository" : {
+		"type" : "git",
+		"url" : "https://github.com/hewenbin/web-osuflow.git"
+	},
+	"keywords" : [
+		"visualization",
+		"osuflow",
+		"server"
+	],
+	"dependencies" : {
+		"connect" : "2.9.x",
+		"socket.io" : "0.9.x"
+	},
+	"license" : "MIT"
+}
