@@ -1,0 +1,19 @@
+// todo list
+1. index page
+2. multi-user
+3. user management
+4. lic
+5. arbitrary resolution
+6. single-user mode
+	1) save streamlines (two way)
+	2) similarity check
+	3) more shapes
+	4) fix controller's bug
+	5) controller streamline parameters
+	6) label streamlines
+	7) lighting, halo (more rendering technique)
+7. multi-data
+8. keep improving gui
+
+// tips
+1. do it on the client side
