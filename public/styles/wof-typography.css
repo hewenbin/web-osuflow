@@ -14,3 +14,28 @@
 html, body {
 	-webkit-font-smoothing: antialiased;
 }
+
+h1.wof, h2.wof, h3.wof {
+	font-family: "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
+	font-weight: normal;
+	letter-spacing: -0.04em;
+	color: #3e4544;
+}
+
+h2.wof {
+	margin-top: 30px;
+	margin-bottom: 5px;
+	font-size: 18px;
+	letter-spacing: -0.04em;
+	line-height: 18px;
+}
+
+p.wof {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	display: inline;
+	font-family: "DejaVuSansMono", "Courier New", Courier, monospace;
+	font-size: 12px;
+	line-height: 14px;
+	color: #5c6665;
+}

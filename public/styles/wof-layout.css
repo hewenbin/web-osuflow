@@ -16,6 +16,21 @@ body {
 	overflow: hidden;
 }
 
+/*general*/
+.btn-right {
+	float: right;
+	margin: 30px 8px 0 0;
+}
+
+.slider-container {
+	margin: 6px 0;
+}
+
+.label-p {
+	margin-top: 3px;
+	float: right;
+}
+
 /*webgl viewer*/
 #viewer {
 	position: fixed;
@@ -45,4 +60,15 @@ body {
 
 .tool-icon {
 	margin: 0 0 15px 23px;
+}
+
+/*one seed tool*/
+.tools {
+	position: fixed;
+	top: 0px;
+	right: 100px;
+	width: 250px;
+	height: 100%;
+	padding: 60px 10px 0 10px;
+	overflow: auto;
 }

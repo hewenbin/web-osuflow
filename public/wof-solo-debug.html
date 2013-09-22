@@ -4,12 +4,14 @@
 		<title>Web OSUFlow - Solo Model - Debug</title>
 
 		<link rel="stylesheet" href="styles/bootstrap.css">
+		<link rel="stylesheet" href="styles/bootstrap-slider.css">
 		<link rel="stylesheet" href="styles/wof-typography.css">
 		<link rel="stylesheet" href="styles/wof-layout.css">
 	</head>
 
 	<body>
 		<div id="viewer"></div>
+
 		<div id="right-content">
 			<div id="web-title">
 				<h1 class="text-right" style="font-family: 'Roboto Condensed', 'Helvetica Neue'; font-size: 25px; font-weight: normal;
@@ -36,9 +38,46 @@
 			</div>
 		</div>
 
+		<div id="tool-os" class="tools">
+			<h2 class="wof">Seed Position</h2>
+			<p id="os-x-info" class="wof">x = 0.00 </p>
+			<p id="os-y-info" class="wof">y = 0.00 </p>
+			<p id="os-z-info" class="wof">z = 0.00</p>
+			<div class="slider-container">
+				<input id="os-x" type="text" data-slider-step="0.01" data-slider-tooltip="hide">
+			</div>
+			<div class="slider-container">
+				<input id="os-y" type="text" data-slider-step="0.01" data-slider-tooltip="hide">
+			</div>
+			<div class="slider-container">
+				<input id="os-z" type="text" data-slider-step="0.01" data-slider-tooltip="hide">
+			</div>
+
+			<h2 class="wof">Vortex Detection Measurements</h2>
+			<div>
+				<p id="os-l-info" class="wof">lambda2 = 0.000000</p>
+				<span id="os-l-label" class="label label-success label-p">Normal</span>
+			</div>
+			<div>
+				<p id="os-q-info" class="wof">q = 0.000000</p>
+				<span id="os-q-label" class="label label-success label-p">Normal</span>
+			</div>
+			<div>
+				<p id="os-d-info" class="wof">delta = 0.000000</p>
+				<span id="os-d-label" class="label label-success label-p">Normal</span>
+			</div>
+			<div>
+				<p id="os-g-info" class="wof">gamma2 = 0.000000</p>
+				<span id="os-g-label" class="label label-success label-p">Normal</span>
+			</div>
+
+			<button id="os-generate" class="btn btn-primary btn-xs btn-right">Generate</button>
+		</div>
+
 		<!-- libraries -->
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="scripts/bootstrap-slider.js"></script>
 		<!-- web osuflow scripts -->
 		<script src="scripts/wof-gui.js"></script>
 		<script src="scripts/wof-main.js"></script>
