@@ -1,10 +1,11 @@
 // web state
+var webState = 0;
 var filename = "tornado.vec";
 
 // three variables
 var container;
 var camera, scene, renderer;
-var editor_control;
+var editor_control, trans_control;
 
 // socket.io object
 var socket = io.connect();
@@ -28,6 +29,9 @@ function init_three() {
 
 	// init controls
 	editor_control = new THREE.EditorControls(camera, renderer.domElement);
+	trans_control = new THREE.TransformControls(camera, renderer.domElement);
+	trans_control.addEventListener('change', render);
+	trans_control.scale = 0.8;
 
 	// init scene
 	scene = new THREE.Scene();
@@ -38,6 +42,7 @@ function init_three() {
 function init_os() {
 	// clear remaining data
 	field.clearVecs();
+	field.clearSeedBoundary();
 
 	// init seed position
 	field.seeds.length = 0;
@@ -59,6 +64,14 @@ function init_os() {
 	socket.emit("seedInfo", field.seeds);
 }
 
+function init_as() {
+	// clear remaining data
+	field.clearVecs();
+
+	// set seed boundary
+	field.setSeedBoundary();
+}
+
 // web osuflow initialization
 function init() {
 	init_gui();
@@ -67,7 +80,20 @@ function init() {
 	socket.emit("loadData", filename);
 
 	// add event listener
+	renderer.domElement.addEventListener('mousedown', onMouseDown, false);
 	window.addEventListener("resize", resize, false);
+}
+
+// event listeners
+function onMouseDown (event) {
+	event.preventDefault();
+
+	if (trans_control.hovered === false) {
+		editor_control.enabled = true;
+	}
+	else {
+		editor_control.enabled = false;
+	}
 }
 
 function resize() {
@@ -83,6 +109,7 @@ function resize() {
 
 function update() {
 	requestAnimationFrame(update);
+	trans_control.update();
 	render();
 }
 

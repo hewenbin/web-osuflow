@@ -17,6 +17,12 @@ WOF.Field = function () {
 
 	// seeds
 	this.seeds = [];
+	// seed boundary
+	this.mbmRed = new THREE.MeshBasicMaterial({color: 0xe77175, opacity: 0.6});
+	this.mbmRed.transparent = true;
+	this.mbmRed.blending = THREE["NormalBlending"];
+	this.geoCubeSB = new THREE.CubeGeometry(1, 1, 1);
+	this.cubeSB = new THREE.Mesh(this.geoCubeSB, this.mbmRed);
 	// vec
 	this.geoVecs = [];
 	this.vecs = [];
@@ -85,6 +91,17 @@ WOF.Field.prototype.setVecs = function (pos, vecs) {
 	}
 };
 
+WOF.Field.prototype.clearSeedBoundary = function () {
+	this.root.remove(this.cubeSB);
+}
+
+WOF.Field.prototype.setSeedBoundary = function () {
+	this.cubeSB.position.set(this.bias.x, this.bias.y, this.bias.z);
+	this.cubeSB.rotation.set(0, 0, 0);
+	this.cubeSB.scale.set(8, 8, 8);
+	this.root.add(this.cubeSB);
+}
+
 WOF.Field.prototype.setStreamlines = function (data) {
 	var gn = this.groups.length;
 	this.groups.push(new WOF.StreamlineGroup());
@@ -101,3 +118,16 @@ WOF.Field.prototype.setColorMethod = function (colorMethod) {
 		this.groups[i].setColorMethod(colorMethod);
 	}
 }
+
+// utility functions
+WOF.Field.prototype.genInCube = function (n) {
+	this.seeds.length = 0;
+	var tmp = WOF.Field.v1;
+	for (var i = 0; i < n; i++) {
+		tmp.set((Math.random() - 0.5), (Math.random() - 0.5), (Math.random() - 0.5));
+		tmp.applyMatrix4(this.cubeSB.matrix);
+		this.seeds.push(tmp.x); this.seeds.push(tmp.y); this.seeds.push(tmp.z);
+	}
+}
+
+WOF.Field.v1 = new THREE.Vector3();

@@ -7,6 +7,35 @@ function init_gui() {
 	$("#tb-al").tooltip();
 	$("#tb-set").tooltip();
 
+	$("#tb-os").on('click', function () {
+		if (webState !== 0) {
+			if (webState === 1) {
+				trans_control.detach(field.cubeSB);
+				scene.remove(trans_control.gizmo);
+			}
+
+			$("#tool-os").show();
+			$("#tool-as").hide();
+
+			webState = 0;
+			init_os();
+		}
+	});
+
+	$("#tb-as").on('click', function () {
+		if (webState !== 1) {
+			$("#tool-os").hide();
+			$("#tool-as").show();
+
+			webState = 1;
+			init_as();
+
+			// attach control
+			trans_control.attach(field.cubeSB);
+			scene.add(trans_control.gizmo);
+		}
+	});
+
 	// init one seed tools
 	$("#os-generate").on('click', function () {
 		socket.emit("genStreamLines", {
@@ -15,6 +44,23 @@ function init_gui() {
 			maxpoints : 500
 		});
 	});
+
+	// init area seed tools
+	$("#as-number").slider({min : 1, max : 50, value : 10}).on("slide", function (event) {
+		$("#as-number-info").html("seed number = " + event.value);
+	});
+
+	$("#as-generate").on('click', function () {
+		field.genInCube($("#as-number").data('slider').getValue());
+		socket.emit("genStreamLines", {
+			seeds : field.seeds,
+			direction : 2,
+			maxpoints : 500
+		});
+	});
+
+	// arrange all tools
+	$("#tool-as").hide();
 
 	// init top toggles
 	$("#cm-basic").on('click', function () {
