@@ -59,3 +59,7 @@ socket.on("seedInfo", function (data) {
 		$("#os-g-label").removeClass("label-danger").addClass("label-success").html("Normal");
 	}
 });
+
+socket.on("streamlines", function (data) {
+	field.setStreamlines(data);
+});

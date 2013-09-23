@@ -20,6 +20,10 @@ WOF.Field = function () {
 	// vec
 	this.geoVecs = [];
 	this.vecs = [];
+
+	// streamline groups
+	this.colorMethod = WOF.BasicColor;
+	this.groups = [];
 }
 
 WOF.Field.prototype.constructor = WOF.Field;
@@ -80,3 +84,20 @@ WOF.Field.prototype.setVecs = function (pos, vecs) {
 		this.root.add(this.vecs[i]);
 	}
 };
+
+WOF.Field.prototype.setStreamlines = function (data) {
+	var gn = this.groups.length;
+	this.groups.push(new WOF.StreamlineGroup());
+	this.groups[gn].setGeometries(data.streamlines);
+	this.groups[gn].setGeoMeasurements(data.curvatures, data.curvatures, data.curvatures);
+	this.groups[gn].setVorMeasurements(data.lambda2, data.q, data.delta, data.gamma2);
+	this.groups[gn].setColorMethod(this.colorMethod);
+	this.root.add(this.groups[gn].object);
+};
+
+WOF.Field.prototype.setColorMethod = function (colorMethod) {
+	this.colorMethod = colorMethod;
+	for (var i = 0, il = this.groups.length; i < il; i++) {
+		this.groups[i].setColorMethod(colorMethod);
+	}
+}

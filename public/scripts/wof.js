@@ -24,6 +24,7 @@ WOF.ColorTable = [new THREE.Color(0x0000ff),
 WOF.BasicMaterials = {
 	lbm : new THREE.LineBasicMaterial({color : Math.random() * 0xffffff, linewidth : 2}),
 	lbmBlack : new THREE.LineBasicMaterial({color : 0x5c6665, linewidth : 1}),
+	lbmGreen : new THREE.LineBasicMaterial({color : 0x51a4a2, linewidth : 2}),
 	lbmVertex : new THREE.LineBasicMaterial({color : 0xffffff, linewidth : 2, vertexColors : THREE.VertexColors})
 };
 

@@ -72,3 +72,10 @@ body {
 	padding: 60px 10px 0 10px;
 	overflow: auto;
 }
+
+/*top toggles*/
+#top-toggles {
+	position: fixed;
+	top: 10px;
+	left: 30px;
+}

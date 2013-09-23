@@ -30,6 +30,15 @@ h2.wof {
 	line-height: 18px;
 }
 
+h3.wof {
+	margin: 0;
+	padding: 0;
+	display: inline;
+	font-size: 13px;
+	letter-spacing: -0.04em;
+	line-height: 18px;
+}
+
 p.wof {
 	margin-top: 5px;
 	margin-bottom: 5px;
