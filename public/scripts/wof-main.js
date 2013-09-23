@@ -1,7 +1,16 @@
+// web state
+var filename = "tornado.vec";
+
 // three variables
 var container;
 var camera, scene, renderer;
 var editor_control;
+
+// socket.io object
+var socket = io.connect();
+
+// field object
+var field = new WOF.Field();
 
 // three initialization
 function init_three() {
@@ -22,12 +31,15 @@ function init_three() {
 
 	// init scene
 	scene = new THREE.Scene();
+	scene.add(field.root);
 }
 
 // web osuflow initialization
 function init() {
 	init_gui();
 	init_three();
+
+	socket.emit("loadData", filename);
 
 	// add event listener
 	window.addEventListener("resize", resize, false);
