@@ -34,6 +34,31 @@ function init_three() {
 	scene.add(field.root);
 }
 
+// one seed tool initialization
+function init_os() {
+	// clear remaining data
+	field.clearVecs();
+
+	// init seed position
+	field.seeds.length = 0;
+	field.seeds[0] = field.bias.x;
+	field.seeds[1] = field.bias.y;
+	field.seeds[2] = field.bias.z;
+
+	// set seed position gui
+	$("#os-x").slider("setValue", field.seeds[0]);
+	$("#os-y").slider("setValue", field.seeds[1]);
+	$("#os-z").slider("setValue", field.seeds[2]);
+
+	// set seed position info
+	$("#os-x-info").html("x = " + field.seeds[0] + " ");
+	$("#os-y-info").html("y = " + field.seeds[1] + " ");
+	$("#os-z-info").html("z = " + field.seeds[2] + " ");
+
+	// get seed info
+	socket.emit("seedInfo", field.seeds);
+}
+
 // web osuflow initialization
 function init() {
 	init_gui();
