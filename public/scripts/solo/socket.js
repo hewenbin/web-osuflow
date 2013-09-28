@@ -62,4 +62,6 @@ socket.on("seedInfo", function (data) {
 
 socket.on("streamlines", function (data) {
 	field.setStreamlines(data);
+	$("#os-generate").button("reset");
+	$("#as-generate").button("reset");
 });

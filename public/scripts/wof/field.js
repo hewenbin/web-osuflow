@@ -102,6 +102,13 @@ WOF.Field.prototype.setSeedBoundary = function () {
 	this.root.add(this.cubeSB);
 }
 
+WOF.Field.prototype.clearStreamlines = function () {
+	for (var i = 0, il = this.groups.length; i < il; i++) {
+		this.root.remove(this.groups[i].object);
+	}
+	this.groups.length = 0;
+};
+
 WOF.Field.prototype.setStreamlines = function (data) {
 	var gn = this.groups.length;
 	this.groups.push(new WOF.StreamlineGroup());

@@ -1,4 +1,4 @@
-// web osuflow gui initialization
+// web osuflow solo gui initialization
 function init_gui() {
 	// init tool bar
 	$("#tb-os").tooltip();
@@ -38,6 +38,8 @@ function init_gui() {
 
 	// init one seed tools
 	$("#os-generate").on('click', function () {
+		$(this).button("loading");
+		$("#as-generate").button("loading");
 		socket.emit("genStreamLines", {
 			seeds : field.seeds,
 			direction : 2,
@@ -46,11 +48,13 @@ function init_gui() {
 	});
 
 	// init area seed tools
-	$("#as-number").slider({min : 1, max : 50, value : 10}).on("slide", function (event) {
+	$("#as-number").slider({min : 1, max : 100, value : 10}).on("slide", function (event) {
 		$("#as-number-info").html("seed number = " + event.value);
 	});
 
 	$("#as-generate").on('click', function () {
+		$(this).button("loading");
+		$("#os-generate").button("loading");
 		field.genInCube($("#as-number").data('slider').getValue());
 		socket.emit("genStreamLines", {
 			seeds : field.seeds,
@@ -83,5 +87,9 @@ function init_gui() {
 	});
 	$("#cm-g").on('click', function () {
 		field.setColorMethod(WOF.Gamma2);
+	});
+
+	$("#h-clear").on("click", function () {
+		field.clearStreamlines();
 	});
 }

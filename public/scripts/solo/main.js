@@ -72,7 +72,7 @@ function init_as() {
 	field.setSeedBoundary();
 }
 
-// web osuflow initialization
+// web osuflow solo initialization
 function init() {
 	init_gui();
 	init_three();
@@ -117,7 +117,7 @@ function render() {
 	renderer.render(scene, camera);
 }
 
-// entry of web osuflow
+// entry of web osuflow solo
 $(document).ready(function () {
 	init();
 	resize();
