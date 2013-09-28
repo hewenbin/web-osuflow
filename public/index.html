@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Web OSUFlow - Home</title>
+
+		<meta name="keywords" content="Visualization, OSU Flow, Vector Field, Streamline, LIC, WebGL, HTML5">
+		<meta name="description" content="Web-osuflow provides interactive web interface to the osuflow library">
+		<meta name="author" content="Wenbin He">
+
+		<link rel="stylesheet" href="styles/bootstrap.min.css">
+		<link rel="stylesheet" href="styles/bootstrap-slider.css">
+		<link rel="stylesheet" href="styles/wof-typography.css">
+		<link rel="stylesheet" href="styles/wof-layout.css">
+	</head>
+
+	<body>
+		<header class="center">
+			<h1 class="text-center" style="margin: 0 0 20px 0; font-family: 'Roboto Condensed', 'Helvetica Neue'; font-size: 50px; font-weight: normal;
+				letter-spacing: -0.03em; color: #3e4544; -webkit-text-stroke: .2px #3e4544;">
+				WEB OSUFLOW
+			</h1>
+			<div style="margin: 0 50px;">
+				<h2 class="wof text-right" style="margin-bottom: 30px;">- Made by the GRAVITY research group</h2>
+				<p class="wof text-center" style="padding: 10px 0; border-top: solid 1px; display: block;">
+					Explore the flow field using particle tracing and line integral convolution.<br>
+					Do analysis on the streamlines based on different measurements and distributions.<br>
+				</p>
+				<p class="wof text-center" style="padding: 10px 0; display: block;">
+					<strong>Note: </strong>Please use <strong>Chrome</strong> for your fully experience! And before<br>
+					run this application, make sure your browser pass all these tests below!
+				</p>
+			</div>
+			<div style="margin: 0 200px 50px 200px">
+				<div>
+					<p class="wof">Canvas</p>
+					<span id="canvas-label" class="label label-warning label-p">Checking</span>
+				</div>
+				<div>
+					<p class="wof">Webgl</p>
+					<span id="webgl-label" class="label label-warning label-p">Checking</span>
+				</div>
+				<div>
+					<p class="wof">Web-socket</p>
+					<span id="socket-label" class="label label-warning label-p">Checking</span>
+				</div>
+				<div>
+					<p class="wof">Web-worker</p>
+					<span id="worker-label" class="label label-warning label-p">Checking</span>
+				</div>
+			</div>
+			<a id="model-solo" href="solo-debug.html" class="btn btn-primary btn-sm disabled">Solo</a>
+			<a id="model-collaborate" href="#" class="btn btn-primary btn-sm disabled">Collaborate</a>
+		</header>
+
+		<footer class="center">
+			<p class="wof text-center" style="display: block;">Copyright &copy 2013 - 2014 Wenbin He | The GRAVITY Research Group of OSU</p>
+		</footer>
+
+		<!-- libraries -->
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.min.js"></script>
+		<script src="scripts/lib/Detector.js"></script>
+		<!-- web osuflow scripts -->
+		<script src="scripts/index/main.js"></script>
+	</body>
+</html>
