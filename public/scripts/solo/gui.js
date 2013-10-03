@@ -9,17 +9,13 @@ function init_gui() {
 
 	$("#tb-os").on('click', function () {
 		if (webState !== 0) {
-			if (webState === 1) {
-				trans_control.detach(field.cubeSB);
-				scene.remove(trans_control.gizmo);
-			}
-
 			$("#tool-os").show();
 			$("#tool-as").hide();
+			$("#tool-lic").hide();
+			$("#tool-al").hide();
 			$("#tool-set").hide();
-
-			webState = 0;
 			init_os();
+			webState = 0;
 		}
 	});
 
@@ -27,32 +23,46 @@ function init_gui() {
 		if (webState !== 1) {
 			$("#tool-os").hide();
 			$("#tool-as").show();
+			$("#tool-lic").hide();
+			$("#tool-al").hide();
 			$("#tool-set").hide();
-
-			webState = 1;
 			init_as();
+			webState = 1;
+		}
+	});
 
-			// attach control
-			trans_control.attach(field.cubeSB);
-			scene.add(trans_control.gizmo);
+	$("#tb-lic").on('click', function () {
+		if (webState !== 2) {
+			$("#tool-os").hide();
+			$("#tool-as").hide();
+			$("#tool-lic").show();
+			$("#tool-al").hide();
+			$("#tool-set").hide();
+			init_lic();
+			webState = 2;
+		}
+	});
+
+	$("#tb-al").on('click', function () {
+		if (webState !== 3) {
+			$("#tool-os").hide();
+			$("#tool-as").hide();
+			$("#tool-lic").hide();
+			$("#tool-al").show();
+			$("#tool-set").hide();
+			init_al();
+			webState = 3;
 		}
 	});
 
 	$("#tb-set").on('click', function () {
 		if (webState !== 4) {
-			if (webState === 1) {
-				trans_control.detach(field.cubeSB);
-				scene.remove(trans_control.gizmo);
-			}
-
 			$("#tool-os").hide();
 			$("#tool-as").hide();
+			$("#tool-lic").hide();
+			$("#tool-al").hide();
 			$("#tool-set").show();
-
-			// clear remaining data
-			field.clearVecs();
-			field.clearSeedBoundary();
-
+			init_set();
 			webState = 4;
 		}
 	});
@@ -101,8 +111,10 @@ function init_gui() {
 		$("#set-max-info").html("max = " + event.value.toFixed(1));
 	});
 
-	// arrange all tools
+	// init all tools
 	$("#tool-as").hide();
+	$("#tool-lic").hide();
+	$("#tool-al").hide();
 	$("#tool-set").hide();
 
 	// init top toggles

@@ -38,40 +38,6 @@ function init_three() {
 	scene.add(field.root);
 }
 
-// one seed tool initialization
-function init_os() {
-	// clear remaining data
-	field.clearVecs();
-	field.clearSeedBoundary();
-
-	// init seed position
-	field.seeds.length = 0;
-	field.seeds[0] = field.bias.x;
-	field.seeds[1] = field.bias.y;
-	field.seeds[2] = field.bias.z;
-
-	// set seed position gui
-	$("#os-x").slider("setValue", field.seeds[0]);
-	$("#os-y").slider("setValue", field.seeds[1]);
-	$("#os-z").slider("setValue", field.seeds[2]);
-
-	// set seed position info
-	$("#os-x-info").html("x = " + field.seeds[0] + " ");
-	$("#os-y-info").html("y = " + field.seeds[1] + " ");
-	$("#os-z-info").html("z = " + field.seeds[2] + " ");
-
-	// get seed info
-	socket.emit("seedInfo", field.seeds);
-}
-
-function init_as() {
-	// clear remaining data
-	field.clearVecs();
-
-	// set seed boundary
-	field.setSeedBoundary();
-}
-
 // web osuflow solo initialization
 function init() {
 	init_gui();
@@ -123,3 +89,87 @@ $(document).ready(function () {
 	resize();
 	update();
 });
+
+// tools initialization
+// one seed tool
+function init_os() {
+	// clear remaining data
+	if (webState === 1) {
+		trans_control.detach(field.cubeSB);
+		scene.remove(trans_control.gizmo);
+		field.clearSeedBoundary();
+	}
+
+	// init seed position
+	field.seeds.length = 0;
+	field.seeds[0] = field.bias.x;
+	field.seeds[1] = field.bias.y;
+	field.seeds[2] = field.bias.z;
+
+	// set seed position gui
+	$("#os-x").slider("setValue", field.seeds[0]);
+	$("#os-y").slider("setValue", field.seeds[1]);
+	$("#os-z").slider("setValue", field.seeds[2]);
+
+	// set seed position info
+	$("#os-x-info").html("x = " + field.seeds[0] + " ");
+	$("#os-y-info").html("y = " + field.seeds[1] + " ");
+	$("#os-z-info").html("z = " + field.seeds[2] + " ");
+
+	// get seed info
+	socket.emit("seedInfo", field.seeds);
+}
+
+// area seed tool
+function init_as() {
+	// clear remaining data
+	if (webState === 0) {
+		field.clearVecs();
+	}
+
+	// set seed boundary
+	field.setSeedBoundary();
+
+	// attach control
+	trans_control.attach(field.cubeSB);
+	scene.add(trans_control.gizmo);
+}
+
+// lic tool
+function init_lic() {
+	// clear remaining data
+	if (webState === 0) {
+		field.clearVecs();
+	}
+	else if (webState === 1) {
+		trans_control.detach(field.cubeSB);
+		scene.remove(trans_control.gizmo);
+		field.clearSeedBoundary();
+	}
+}
+
+// analysis tool
+function init_al() {
+	// clear remaining data
+	if (webState === 0) {
+		field.clearVecs();
+	}
+	else if (webState === 1) {
+		trans_control.detach(field.cubeSB);
+		scene.remove(trans_control.gizmo);
+		field.clearSeedBoundary();
+	}
+}
+
+// settings tool
+function init_set() {
+	// clear remaining data
+	if (webState === 0) {
+		field.clearVecs();
+	}
+	else if (webState === 1) {
+		trans_control.detach(field.cubeSB);
+		scene.remove(trans_control.gizmo);
+		field.clearSeedBoundary();
+	}
+}
