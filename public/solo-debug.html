@@ -83,6 +83,35 @@
 			<button id="as-generate" class="btn btn-primary btn-xs btn-right" data-loading-text="Generating">Generate</button>
 		</div>
 
+		<div id="tool-set" class="tools">
+			<h2 class="wof">Trace Direction</h2>
+			<div id="set-td" class="btn-group" data-toggle="buttons" style="margin-top: 15px;">
+				<label class="btn btn-primary btn-xs active">
+					<input type="radio" name="td" id="set-forward" value="2">Forward
+				</label>
+				<label class="btn btn-primary btn-xs">
+					<input type="radio" name="td" id="set-backward" value="1">Backward
+				</label>
+				<label class="btn btn-primary btn-xs">
+					<input type="radio" name="td" id="set-both" value="3">Both
+				</label>
+			</div>
+			<h2 class="wof">Max Points</h2>
+			<p id="set-number-info" class="wof">max points number = 500</p>
+			<div class="slider-container">
+				<input id="set-number" type="text" data-slider-step="1" data-slider-tooltip="hide">
+			</div>
+			<h2 class="wof">Step Size</h2>
+			<p id="set-min-info" class="wof">min = 1.0 </p>
+			<p id="set-max-info" class="wof">max = 4.0 </p>
+			<div class="slider-container">
+				<input id="set-min" type="text" data-slider-step="0.1" data-slider-tooltip="hide">
+			</div>
+			<div class="slider-container">
+				<input id="set-max" type="text" data-slider-step="0.1" data-slider-tooltip="hide">
+			</div>
+		</div>
+
 		<div id="top-toggles">
 			<h3 class="wof">Color Method&nbsp;&nbsp;</h3>
 			<div class="btn-group">
