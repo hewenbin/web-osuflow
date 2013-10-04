@@ -25,6 +25,9 @@ socket.on("boundary", function (data) {
 
 	// init one seed tool
 	init_os();
+
+	// remove overlay
+	$("#overlay").fadeOut(200);
 });
 
 socket.on("seedInfo", function (data) {
