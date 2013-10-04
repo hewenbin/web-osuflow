@@ -119,6 +119,22 @@ function init_gui() {
 		}
 	});
 
+	$("#al-nonvortex").on('click', function () {
+		if (currentIntersected !== undefined && currentLine.vortex !== false) {
+			currentLine.vortex = false;
+			$(this).button('toggle');
+			$("#al-vortex").button('toggle');
+		}
+	});
+
+	$("#al-vortex").on('click', function () {
+		if (currentIntersected !== undefined && currentLine.vortex !== true) {
+			currentLine.vortex = true;
+			$(this).button('toggle');
+			$("#al-nonvortex").button('toggle');
+		}
+	});
+
 	$("#al-curvature").on('click', function () {
 		if (currentIntersected !== undefined) {
 			if (currentLine.analyzed) {

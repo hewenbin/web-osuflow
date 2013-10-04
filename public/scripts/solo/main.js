@@ -124,6 +124,15 @@ function onMouseUpPicking(event) {
 			$("#al-line-info").html("line = " + lineID);
 			$("#al-samples-info").html("sample points = " + currentIntersected.geometry.vertices.length);
 			$("#al-analyzed-info").html("analyzed = " + currentLine.analyzed);
+			// update label
+			if (currentLine.vortex) {
+				$("#al-nonvortex").removeClass("active");
+				$("#al-vortex").addClass("active");
+			}
+			else {
+				$("#al-nonvortex").addClass("active");
+				$("#al-vortex").removeClass("active");
+			}
 			// update measurements
 			if (currentLine.analyzed) {
 				$("#al-curvature-info").html("curvature = " + Math.min.apply(Math, currentLine.curvature).toFixed(6) +
@@ -250,6 +259,8 @@ function init_al() {
 	$("#al-q-info").html("q = null");
 	$("#al-delta-info").html("delta = null");
 	$("#al-gamma2-info").html("gamma2 = null");
+	$("#al-nonvortex").removeClass("active");
+	$("#al-vortex").removeClass("active");
 }
 
 // settings tool
