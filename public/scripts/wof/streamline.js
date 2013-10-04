@@ -10,6 +10,8 @@ WOF.Streamline = function (geometry) {
 	this.setGeometry(geometry);
 	// object
 	this.object = new THREE.Line(this.geometry, WOF.BasicMaterials.lbmGreen);
+	// analyzed or not
+	this.analyzed = false;
 	// geometric measurements
 	this.curl = [];
 	this.curvature = [];

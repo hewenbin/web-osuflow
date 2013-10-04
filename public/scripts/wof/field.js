@@ -30,6 +30,8 @@ WOF.Field = function () {
 	// streamline groups
 	this.colorMethod = WOF.BasicColor;
 	this.groups = [];
+	this.groupRoot = new THREE.Object3D();
+	this.root.add(this.groupRoot);
 }
 
 WOF.Field.prototype.constructor = WOF.Field;
@@ -104,7 +106,7 @@ WOF.Field.prototype.setSeedBoundary = function () {
 
 WOF.Field.prototype.clearStreamlines = function () {
 	for (var i = 0, il = this.groups.length; i < il; i++) {
-		this.root.remove(this.groups[i].object);
+		this.groupRoot.remove(this.groups[i].object);
 	}
 	this.groups.length = 0;
 };
@@ -113,10 +115,8 @@ WOF.Field.prototype.setStreamlines = function (data) {
 	var gn = this.groups.length;
 	this.groups.push(new WOF.StreamlineGroup());
 	this.groups[gn].setGeometries(data.streamlines);
-	this.groups[gn].setGeoMeasurements(data.curvatures, data.curvatures, data.curvatures);
-	this.groups[gn].setVorMeasurements(data.lambda2, data.q, data.delta, data.gamma2);
 	this.groups[gn].setColorMethod(this.colorMethod);
-	this.root.add(this.groups[gn].object);
+	this.groupRoot.add(this.groups[gn].object);
 };
 
 WOF.Field.prototype.setColorMethod = function (colorMethod) {
@@ -135,6 +135,22 @@ WOF.Field.prototype.genInCube = function (n) {
 		tmp.applyMatrix4(this.cubeSB.matrix);
 		this.seeds.push(tmp.x); this.seeds.push(tmp.y); this.seeds.push(tmp.z);
 	}
+}
+
+WOF.Field.prototype.groupOfLine = function (object) {
+	var group = object.parent;
+	for (var i = 0, il = this.groups.length; i < il; i++) {
+		if (group === this.groups[i].object) break;
+	}
+	return i;
+}
+
+WOF.Field.prototype.indexOfLine = function (object, groupID) {
+	var group = this.groups[groupID];
+	for (var i = 0, il = group.streamlines.length; i < il; i++) {
+		if (object === group.streamlines[i].object) break;
+	}
+	return i;
 }
 
 WOF.Field.v1 = new THREE.Vector3();
