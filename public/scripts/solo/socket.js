@@ -1,20 +1,20 @@
 // boundary is a initiation of the program
-socket.on("boundary", function (result) {
+socket.on("boundary", function (data) {
 	// set boundary of the field
-	field.setBoundary(result.min, result.max);
+	field.setBoundary(data.min, data.max);
 
 	// set gui base on the boundary
-	$("#os-x").slider({min : result.min[0], max : result.max[0]}).on("slide", function (event) {
+	$("#os-x").slider({min : data.min[0], max : data.max[0]}).on("slide", function (event) {
 		$("#os-x-info").html("x = " + event.value.toFixed(2) + " ");
 		field.seeds[0] = event.value;
 		socket.emit("seedInfo", field.seeds);
 	});
-	$("#os-y").slider({min : result.min[1], max : result.max[1]}).on("slide", function (event) {
+	$("#os-y").slider({min : data.min[1], max : data.max[1]}).on("slide", function (event) {
 		$("#os-y-info").html("y = " + event.value.toFixed(2) + " ");
 		field.seeds[1] = event.value;
 		socket.emit("seedInfo", field.seeds);
 	});
-	$("#os-z").slider({min : result.min[2], max : result.max[2]}).on("slide", function (event) {
+	$("#os-z").slider({min : data.min[2], max : data.max[2]}).on("slide", function (event) {
 		$("#os-z-info").html("z = " + event.value.toFixed(2));
 		field.seeds[2] = event.value;
 		socket.emit("seedInfo", field.seeds);
@@ -64,4 +64,26 @@ socket.on("streamlines", function (data) {
 	field.setStreamlines(data);
 	$("#os-generate").button("reset");
 	$("#as-generate").button("reset");
+});
+
+socket.on("measurements", function (data) {
+	var line = field.groups[data.group].streamlines[data.line];
+	line.setGeoMeasurements(data.curvature, data.curvature, data.curvature);
+	line.setVorMeasurements(data.lambda2, data.q, data.delta, data.gamma2);
+	line.analyzed = true;
+	$("#al-analyze").button("reset");
+
+	if (line === currentLine) {
+		$("#al-analyzed-info").html("analyzed = true");
+		$("#al-curvature-info").html("curvature = " + Math.min.apply(Math, currentLine.curvature).toFixed(6) +
+			" ~ " + Math.max.apply(Math, currentLine.curvature).toFixed(6));
+		$("#al-lambda2-info").html("lambda2 = " + Math.min.apply(Math, currentLine.lambda2).toFixed(6) +
+			" ~ " + Math.max.apply(Math, currentLine.lambda2).toFixed(6));
+		$("#al-q-info").html("q = " + Math.min.apply(Math, currentLine.q).toFixed(6) +
+			" ~ " + Math.max.apply(Math, currentLine.q).toFixed(6));
+		$("#al-delta-info").html("delta = " + Math.min.apply(Math, currentLine.delta).toFixed(6) +
+			" ~ " + Math.max.apply(Math, currentLine.delta).toFixed(6));
+		$("#al-gamma2-info").html("gamma2 = " + Math.min.apply(Math, currentLine.gamma2).toFixed(6) +
+			" ~ " + Math.max.apply(Math, currentLine.gamma2).toFixed(6));
+	}
 });

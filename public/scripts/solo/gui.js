@@ -98,6 +98,72 @@ function init_gui() {
 		});
 	});
 
+	// init analysis tools
+	var tempLine = [];
+	$("#al-analyze").on('click', function () {
+		if (currentIntersected !== undefined) {
+			if (!currentLine.analyzed) {
+				$(this).button("loading");
+				tempLine.length = 0;
+				for (var i = 0, il = currentLine.geometry.vertices.length; i < il; i++) {
+					tempLine.push(currentLine.geometry.vertices[i].x);
+					tempLine.push(currentLine.geometry.vertices[i].y);
+					tempLine.push(currentLine.geometry.vertices[i].z);
+				}
+				socket.emit("analyze", {
+					group : groupID,
+					line : lineID,
+					points : tempLine
+				});
+			}
+		}
+	});
+
+	$("#al-curvature").on('click', function () {
+		if (currentIntersected !== undefined) {
+			if (currentLine.analyzed) {
+				currentLine.measureColorMapping(WOF.Curvature);
+				currentLine.setMaterial(WOF.BasicMaterials.lbmVertex);
+			}
+		}
+	});
+
+	$("#al-lambda2").on('click', function () {
+		if (currentIntersected !== undefined) {
+			if (currentLine.analyzed) {
+				currentLine.measureColorMapping(WOF.Lambda2);
+				currentLine.setMaterial(WOF.BasicMaterials.lbmVertex);
+			}
+		}
+	});
+
+	$("#al-q").on('click', function () {
+		if (currentIntersected !== undefined) {
+			if (currentLine.analyzed) {
+				currentLine.measureColorMapping(WOF.Q);
+				currentLine.setMaterial(WOF.BasicMaterials.lbmVertex);
+			}
+		}
+	});
+
+	$("#al-delta").on('click', function () {
+		if (currentIntersected !== undefined) {
+			if (currentLine.analyzed) {
+				currentLine.measureColorMapping(WOF.Delta);
+				currentLine.setMaterial(WOF.BasicMaterials.lbmVertex);
+			}
+		}
+	});
+
+	$("#al-gamma2").on('click', function () {
+		if (currentIntersected !== undefined) {
+			if (currentLine.analyzed) {
+				currentLine.measureColorMapping(WOF.Gamma2);
+				currentLine.setMaterial(WOF.BasicMaterials.lbmVertex);
+			}
+		}
+	});
+
 	// init settings tools
 	$("#set-number").slider({min : 10, max : 1000, value : 500}).on("slide", function (event) {
 		$("#set-number-info").html("max points number = " + event.value);
@@ -120,27 +186,21 @@ function init_gui() {
 	// init top toggles
 	$("#cm-basic").on('click', function () {
 		field.setColorMethod(WOF.BasicColor);
+		if (webState === 3 && currentIntersected !== undefined) {
+			currentIntersected.material = WOF.BasicMaterials.lbmWideRed;
+		}
 	});
 	$("#cm-group").on('click', function () {
 		field.setColorMethod(WOF.GroupColor);
-	});
-	$("#cm-cv").on('click', function () {
-		field.setColorMethod(WOF.Curvature);
-	});
-	$("#cm-l").on('click', function () {
-		field.setColorMethod(WOF.Lambda2);
-	});
-	$("#cm-q").on('click', function () {
-		field.setColorMethod(WOF.Q);
-	});
-	$("#cm-d").on('click', function () {
-		field.setColorMethod(WOF.Delta);
-	});
-	$("#cm-g").on('click', function () {
-		field.setColorMethod(WOF.Gamma2);
+		if (webState === 3 && currentIntersected !== undefined) {
+			currentIntersected.material = WOF.BasicMaterials.lbmWideRed;
+		}
 	});
 
 	$("#h-clear").on("click", function () {
 		field.clearStreamlines();
+		if (webState === 3) {
+			init_al();
+		}
 	});
 }

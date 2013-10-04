@@ -62,6 +62,8 @@ THREE.EditorControls = function ( object, domElement ) {
 
 		scope.dispatchEvent( changeEvent );
 
+		// update ray caster's linePrecision
+		raycaster.linePrecision = vector.copy(center).sub(object.position).length() * 0.003;
 	};
 
 	this.rotate = function ( delta ) {

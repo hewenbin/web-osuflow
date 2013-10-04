@@ -6,6 +6,9 @@ var filename = "tornado.vec";
 var container;
 var camera, scene, renderer;
 var editor_control, trans_control;
+var projector, raycaster, currentIntersected,
+	groupID, lineID, currentLine;
+var mouse = new THREE.Vector2();
 
 // socket.io object
 var socket = io.connect();
@@ -33,6 +36,11 @@ function init_three() {
 	trans_control.addEventListener('change', render);
 	trans_control.scale = 0.8;
 
+	// init picking tools
+	projector = new THREE.Projector();
+	raycaster = new THREE.Raycaster();
+	raycaster.linePrecision = 0.5;
+
 	// init scene
 	scene = new THREE.Scene();
 	scene.add(field.root);
@@ -48,18 +56,6 @@ function init() {
 	// add event listener
 	renderer.domElement.addEventListener('mousedown', onMouseDown, false);
 	window.addEventListener("resize", resize, false);
-}
-
-// event listeners
-function onMouseDown (event) {
-	event.preventDefault();
-
-	if (trans_control.hovered === false) {
-		editor_control.enabled = true;
-	}
-	else {
-		editor_control.enabled = false;
-	}
 }
 
 function resize() {
@@ -90,6 +86,68 @@ $(document).ready(function () {
 	update();
 });
 
+// event listeners
+function onMouseDown(event) {
+	event.preventDefault();
+
+	if (trans_control.hovered === false) {
+		editor_control.enabled = true;
+	}
+	else {
+		editor_control.enabled = false;
+	}
+}
+
+function onMouseDownPicking(event) {
+	mouse.x = (event.layerX / container.offsetWidth) * 2 - 1;
+	mouse.y = -(event.layerY / container.offsetHeight) * 2 + 1;
+}
+
+function onMouseUpPicking(event) {
+	if (mouse.x === (event.layerX / container.offsetWidth) * 2 - 1
+		&& mouse.y === -(event.layerY / container.offsetHeight) * 2 + 1) {
+		var vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+		projector.unprojectVector(vector, camera);
+		raycaster.set(camera.position, vector.sub(camera.position).normalize());
+
+		var intersects = raycaster.intersectObjects(field.groupRoot.children, true);
+
+		if (intersects.length > 0) {
+			currentIntersected = intersects[0].object;
+			field.setColorMethod(field.colorMethod);
+			groupID = field.groupOfLine(currentIntersected);
+			lineID = field.indexOfLine(currentIntersected, groupID);
+			currentLine = field.groups[groupID].streamlines[lineID];
+			currentIntersected.material = WOF.BasicMaterials.lbmWideRed;
+			// update picked line info
+			$("#al-group-info").html("group = " + groupID + " ");
+			$("#al-line-info").html("line = " + lineID);
+			$("#al-samples-info").html("sample points = " + currentIntersected.geometry.vertices.length);
+			$("#al-analyzed-info").html("analyzed = " + currentLine.analyzed);
+			// update measurements
+			if (currentLine.analyzed) {
+				$("#al-curvature-info").html("curvature = " + Math.min.apply(Math, currentLine.curvature).toFixed(6) +
+					" ~ " + Math.max.apply(Math, currentLine.curvature).toFixed(6));
+				$("#al-lambda2-info").html("lambda2 = " + Math.min.apply(Math, currentLine.lambda2).toFixed(6) +
+					" ~ " + Math.max.apply(Math, currentLine.lambda2).toFixed(6));
+				$("#al-q-info").html("q = " + Math.min.apply(Math, currentLine.q).toFixed(6) +
+					" ~ " + Math.max.apply(Math, currentLine.q).toFixed(6));
+				$("#al-delta-info").html("delta = " + Math.min.apply(Math, currentLine.delta).toFixed(6) +
+					" ~ " + Math.max.apply(Math, currentLine.delta).toFixed(6));
+				$("#al-gamma2-info").html("gamma2 = " + Math.min.apply(Math, currentLine.gamma2).toFixed(6) +
+					" ~ " + Math.max.apply(Math, currentLine.gamma2).toFixed(6));
+			}
+			else {
+				$("#al-curvature-info").html("curvature = null");
+				$("#al-lambda2-info").html("lambda2 = null");
+				$("#al-q-info").html("q = null");
+				$("#al-delta-info").html("delta = null");
+				$("#al-gamma2-info").html("gamma2 = null");
+			}
+		}
+	}
+}
+
 // tools initialization
 // one seed tool
 function init_os() {
@@ -98,6 +156,11 @@ function init_os() {
 		trans_control.detach(field.cubeSB);
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
+	}
+	else if (webState === 3) {
+		field.setColorMethod(field.colorMethod);
+		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
+		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
 	}
 
 	// init seed position
@@ -126,6 +189,11 @@ function init_as() {
 	if (webState === 0) {
 		field.clearVecs();
 	}
+	else if (webState === 3) {
+		field.setColorMethod(field.colorMethod);
+		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
+		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
+	}
 
 	// set seed boundary
 	field.setSeedBoundary();
@@ -146,6 +214,11 @@ function init_lic() {
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
 	}
+	else if (webState === 3) {
+		field.setColorMethod(field.colorMethod);
+		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
+		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
+	}
 }
 
 // analysis tool
@@ -159,6 +232,24 @@ function init_al() {
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
 	}
+
+	// add picking event listeners
+	renderer.domElement.addEventListener('mousedown', onMouseDownPicking, false);
+	renderer.domElement.addEventListener('mouseup', onMouseUpPicking, false);
+
+	// init picked line info
+	currentIntersected = undefined;
+	groupID = undefined; lineID = undefined;
+	currentLine = undefined;
+	$("#al-group-info").html("group = null ");
+	$("#al-line-info").html("line = null");
+	$("#al-samples-info").html("sample points = null");
+	$("#al-analyzed-info").html("analyzed = false");
+	$("#al-curvature-info").html("curvature = null");
+	$("#al-lambda2-info").html("lambda2 = null");
+	$("#al-q-info").html("q = null");
+	$("#al-delta-info").html("delta = null");
+	$("#al-gamma2-info").html("gamma2 = null");
 }
 
 // settings tool
@@ -171,5 +262,10 @@ function init_set() {
 		trans_control.detach(field.cubeSB);
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
+	}
+	else if (webState === 3) {
+		field.setColorMethod(field.colorMethod);
+		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
+		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
 	}
 }
