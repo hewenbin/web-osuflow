@@ -1,5 +1,5 @@
 // todo list
-1. index page
+// 1. index page
 2. multi-user
 3. user management
 4. lic
@@ -9,13 +9,17 @@
 	2) similarity check
 	3) more shapes
 	4) fix controller's bug
-	5) controller streamline parameters
+	// 5) controller streamline parameters
 	6) label streamlines
 	7) lighting, halo (more rendering technique)
 7. multi-data
 8. keep improving gui
 9. remove useless part of three.js
 10. favicon.ico
+11. histogram(important!!)
+12. loading overlay
+13. hide & show unpicked lines
+14. undo & redo
 
 // tips
 1. do it on the client side
