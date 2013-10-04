@@ -94,6 +94,15 @@
 			<p id="al-samples-info" class="wof" style="display:block;">sample points = null</p>
 			<p id="al-analyzed-info" class="wof" style="display:block;">analyzed = false</p>
 			<button id="al-analyze" class="btn btn-primary btn-xs" data-loading-text="Analyzing">Analyze</button>
+<!-- 			<h2 class="wof">Labels</h2>
+			<div id="al-vl" class="btn-group" data-toggle="buttons" style="margin-top: 15px;">
+				<label class="btn btn-success btn-xs active">
+					<input type="radio" name="vl" id="al-nonvortex" value="1">Non-vortex
+				</label>
+				<label class="btn btn-danger btn-xs">
+					<input type="radio" name="vl" id="al-vortex" value="2">Vortex
+				</label>
+			</div> -->
 			<h2 class="wof">Geometric Measurements</h2>
 			<p id="al-curvature-info" class="wof">curvature = null</p>
 			<h2 class="wof">Vortex Detection Measurements</h2>
@@ -101,7 +110,7 @@
 			<p id="al-q-info" class="wof" style="display:block;">q = null</p>
 			<p id="al-delta-info" class="wof" style="display:block;">delta = null</p>
 			<p id="al-gamma2-info" class="wof" style="display:block;">gamma2 = null</p>
-			<h2 class="wof">Distributions</h2>
+			<h2 class="wof">Normalized Distributions</h2>
 			<div class="btn-group">
 				<button id="al-curvature" type="button" class="btn btn-primary btn-xs">curvature</button>
 			</div>
@@ -147,6 +156,8 @@
 			<div class="btn-group">
 				<button id="cm-basic" type="button" class="btn btn-primary btn-xs">basic</button>
 				<button id="cm-group" type="button" class="btn btn-primary btn-xs">group</button>
+				<button id="cm-transparent" type="button" class="btn btn-primary btn-xs">transparent</button>
+				<button id="cm-label" type="button" class="btn btn-primary btn-xs">label</button>
 			</div>
 			<h3 class="wof">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;History&nbsp;&nbsp;</h3>
 			<button id="h-clear" type="button" class="btn btn-danger btn-xs">clear</button>

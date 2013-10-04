@@ -25,20 +25,28 @@ WOF.BasicMaterials = {
 	lbm : new THREE.LineBasicMaterial({color : Math.random() * 0xffffff, linewidth : 2}),
 	lbmBlack : new THREE.LineBasicMaterial({color : 0x5c6665, linewidth : 1}),
 	lbmGreen : new THREE.LineBasicMaterial({color : 0x51a4a2, linewidth : 2}),
+	lbmLightGreen : new THREE.LineBasicMaterial({color : 0x6ec2a3, linewidth : 2}),
+	lbmRed : new THREE.LineBasicMaterial({color : 0xe28890, linewidth : 2}),
 	// for picking
 	lbmWideRed : new THREE.LineBasicMaterial({color : 0xff0000, linewidth : 3}),
+	lbmTransparent : new THREE.LineBasicMaterial({color : 0x51a4a2, opacity: 0.3, linewidth : 2}),
 	lbmVertex : new THREE.LineBasicMaterial({color : 0xffffff, linewidth : 3, vertexColors : THREE.VertexColors})
 };
+
+WOF.BasicMaterials.lbmTransparent.transparent = true;
+WOF.BasicMaterials.lbmTransparent.blending = THREE["NormalBlending"];
 
 // key words
 // color methods
 WOF.BasicColor = 0;
 WOF.GroupColor = 1;
-WOF.LabelColor = 2;
-WOF.Curl = 3;
-WOF.Curvature = 4;
-WOF.Torsion = 5;
-WOF.Lambda2 = 6;
-WOF.Q = 7;
-WOF.Delta = 8;
-WOF.Gamma2 = 9;
+WOF.TransparentColor = 2;
+WOF.LabelColor = 3;
+
+WOF.Curl = 4;
+WOF.Curvature = 5;
+WOF.Torsion = 6;
+WOF.Lambda2 = 7;
+WOF.Q = 8;
+WOF.Delta = 9;
+WOF.Gamma2 = 10;

@@ -49,6 +49,21 @@ WOF.StreamlineGroup.prototype.setColorMethod = function (colorMethod) {
 			this.streamlines[i].setMaterial(this.material);
 		}
 	}
+	else if (colorMethod === WOF.TransparentColor) {
+		for (var i = 0, il = this.streamlines.length; i < il; i++) {
+			this.streamlines[i].setMaterial(WOF.BasicMaterials.lbmTransparent);
+		}
+	}
+	else if (colorMethod === WOF.LabelColor) {
+		for (var i = 0, il = this.streamlines.length; i < il; i++) {
+			if (this.streamlines[i].vortex) {
+				this.streamlines[i].setMaterial(WOF.BasicMaterials.lbmRed);
+			}
+			else {
+				this.streamlines[i].setMaterial(WOF.BasicMaterials.lbmLightGreen);
+			}
+		}
+	}
 	else {
 		for (var i = 0, il = this.streamlines.length; i < il; i++) {
 			this.streamlines[i].measureColorMapping(colorMethod);

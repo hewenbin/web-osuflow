@@ -185,15 +185,43 @@ function init_gui() {
 
 	// init top toggles
 	$("#cm-basic").on('click', function () {
+		var tempMaterial;
+		if (webState === 3 && currentIntersected !== undefined) {
+			tempMaterial = currentIntersected.material;
+		}
 		field.setColorMethod(WOF.BasicColor);
 		if (webState === 3 && currentIntersected !== undefined) {
-			currentIntersected.material = WOF.BasicMaterials.lbmWideRed;
+			currentIntersected.material = tempMaterial;
 		}
 	});
 	$("#cm-group").on('click', function () {
+		var tempMaterial;
+		if (webState === 3 && currentIntersected !== undefined) {
+			tempMaterial = currentIntersected.material;
+		}
 		field.setColorMethod(WOF.GroupColor);
 		if (webState === 3 && currentIntersected !== undefined) {
-			currentIntersected.material = WOF.BasicMaterials.lbmWideRed;
+			currentIntersected.material = tempMaterial;
+		}
+	});
+	$("#cm-transparent").on('click', function () {
+		var tempMaterial;
+		if (webState === 3 && currentIntersected !== undefined) {
+			tempMaterial = currentIntersected.material;
+		}
+		field.setColorMethod(WOF.TransparentColor);
+		if (webState === 3 && currentIntersected !== undefined) {
+			currentIntersected.material = tempMaterial;
+		}
+	});
+	$("#cm-label").on('click', function () {
+		var tempMaterial;
+		if (webState === 3 && currentIntersected !== undefined) {
+			tempMaterial = currentIntersected.material;
+		}
+		field.setColorMethod(WOF.LabelColor);
+		if (webState === 3 && currentIntersected !== undefined) {
+			currentIntersected.material = tempMaterial;
 		}
 	});
 
