@@ -20,11 +20,30 @@ socket.on("boundary", function (data) {
 		socket.emit("seedInfo", field.seeds);
 	});
 
+	$("#lic-xy").slider({min : data.min[2], max : data.max[2]}).on("slide", function (event) {
+		$("#lic-xy-info").html("position = " + event.value);
+		field.setLic(1, event.value);
+	});
+	$("#lic-yz").slider({min : data.min[0], max : data.max[0]}).on("slide", function (event) {
+		$("#lic-yz-info").html("position = " + event.value);
+		field.setLic(2, event.value);
+	});
+	$("#lic-zx").slider({min : data.min[1], max : data.max[1]}).on("slide", function (event) {
+		$("#lic-zx-info").html("position = " + event.value);
+		field.setLic(3, event.value);
+	});
+
 	// set camera
 	camera.position.z = field.min.distanceTo(field.max) * 1.4;
 
 	// init one seed tool
 	init_os();
+
+	// init all tools
+	$("#tool-as").hide();
+	$("#tool-lic").hide();
+	$("#tool-al").hide();
+	$("#tool-set").hide();
 
 	// remove overlay
 	$("#overlay").fadeOut(200);

@@ -166,6 +166,9 @@ function init_os() {
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
 	}
+	else if (webState === 2) {
+		field.clearLic();
+	}
 	else if (webState === 3) {
 		field.setColorMethod(field.colorMethod);
 		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
@@ -198,6 +201,9 @@ function init_as() {
 	if (webState === 0) {
 		field.clearVecs();
 	}
+	else if (webState === 2) {
+		field.clearLic();
+	}
 	else if (webState === 3) {
 		field.setColorMethod(field.colorMethod);
 		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
@@ -228,6 +234,18 @@ function init_lic() {
 		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
 		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
 	}
+
+	// set lic position gui
+	$("#lic-xy").slider("setValue", 0);
+	$("#lic-yz").slider("setValue", 0);
+	$("#lic-zx").slider("setValue", 0);
+
+	$("#lic-xy-info").html("position = " + 0);
+	$("#lic-yz-info").html("position = " + 0);
+	$("#lic-zx-info").html("position = " + 0);
+
+	// set lic
+	field.setLic(1, 0);
 }
 
 // analysis tool
@@ -240,6 +258,9 @@ function init_al() {
 		trans_control.detach(field.cubeSB);
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
+	}
+	else if (webState === 2) {
+		field.clearLic();
 	}
 
 	// add picking event listeners
@@ -273,6 +294,9 @@ function init_set() {
 		trans_control.detach(field.cubeSB);
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
+	}
+	else if (webState === 2) {
+		field.clearLic();
 	}
 	else if (webState === 3) {
 		field.setColorMethod(field.colorMethod);

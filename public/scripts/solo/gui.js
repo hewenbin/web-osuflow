@@ -193,12 +193,6 @@ function init_gui() {
 		$("#set-max-info").html("max = " + event.value.toFixed(1));
 	});
 
-	// init all tools
-	$("#tool-as").hide();
-	$("#tool-lic").hide();
-	$("#tool-al").hide();
-	$("#tool-set").hide();
-
 	// init top toggles
 	$("#cm-basic").on('click', function () {
 		var tempMaterial;

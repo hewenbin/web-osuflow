@@ -26,13 +26,22 @@ WOF.Field = function () {
 	// vec
 	this.geoVecs = [];
 	this.vecs = [];
+	// lic
+	this.geoLic = new THREE.PlaneGeometry(1, 1);
+	this.texLic = {
+		xy : [],
+		yz : [],
+		zx : []
+	};
+	this.mbmTex = new THREE.MeshBasicMaterial({side : THREE.DoubleSide});
+	this.lic = new THREE.Mesh(this.geoLic, this.mbmTex);
 
 	// streamline groups
 	this.colorMethod = WOF.BasicColor;
 	this.groups = [];
 	this.groupRoot = new THREE.Object3D();
 	this.root.add(this.groupRoot);
-}
+};
 
 WOF.Field.prototype.constructor = WOF.Field;
 
@@ -81,7 +90,7 @@ WOF.Field.prototype.clearVecs = function () {
 		this.root.remove(this.vecs[i]);
 	}
 	this.vecs.length = 0; this.geoVecs.length = 0;
-}
+};
 
 WOF.Field.prototype.setVecs = function (pos, vecs) {
 	this.clearVecs();
@@ -95,14 +104,50 @@ WOF.Field.prototype.setVecs = function (pos, vecs) {
 
 WOF.Field.prototype.clearSeedBoundary = function () {
 	this.root.remove(this.cubeSB);
-}
+};
 
 WOF.Field.prototype.setSeedBoundary = function () {
 	this.cubeSB.position.set(this.bias.x, this.bias.y, this.bias.z);
 	this.cubeSB.rotation.set(0, 0, 0);
 	this.cubeSB.scale.set(8, 8, 8);
 	this.root.add(this.cubeSB);
+};
+
+WOF.Field.prototype.clearLic = function () {
+	this.root.remove(this.lic);
 }
+
+WOF.Field.prototype.setLic = function (face, pos) {
+	if (face === 1) {
+		if (this.texLic.xy[pos] === undefined) {
+			this.texLic.xy[pos] = THREE.ImageUtils.loadTexture('textures/tornado/tornado_xy_' + pos + '.jpg');
+		}
+		this.mbmTex.map = this.texLic.xy[pos];
+
+		this.lic.rotation.set(0, 0, 0);
+		this.lic.position.set(this.bias.x, this.bias.y, pos);
+	}
+	if (face === 2) {
+		if (this.texLic.yz[pos] === undefined) {
+			this.texLic.yz[pos] = THREE.ImageUtils.loadTexture('textures/tornado/tornado_yz_' + pos + '.jpg');
+		}
+		this.mbmTex.map = this.texLic.yz[pos];
+
+		this.lic.rotation.set(0, Math.PI / 2, 0);
+		this.lic.position.set(pos, this.bias.y, this.bias.z);
+	}
+	if (face === 3) {
+		if (this.texLic.zx[pos] === undefined) {
+			this.texLic.zx[pos] = THREE.ImageUtils.loadTexture('textures/tornado/tornado_zx_' + pos + '.jpg');
+		}
+		this.mbmTex.map = this.texLic.zx[pos];
+
+		this.lic.rotation.set(-Math.PI / 2, 0, 0);
+		this.lic.position.set(this.bias.x, pos, this.bias.z);
+	}
+	this.lic.scale.set(this.bias.x * 2, this.bias.y * 2, this.bias.z * 2);
+	this.root.add(this.lic);
+};
 
 WOF.Field.prototype.clearStreamlines = function () {
 	for (var i = 0, il = this.groups.length; i < il; i++) {
@@ -124,7 +169,7 @@ WOF.Field.prototype.setColorMethod = function (colorMethod) {
 	for (var i = 0, il = this.groups.length; i < il; i++) {
 		this.groups[i].setColorMethod(colorMethod);
 	}
-}
+};
 
 // utility functions
 WOF.Field.prototype.genInCube = function (n) {
@@ -135,7 +180,7 @@ WOF.Field.prototype.genInCube = function (n) {
 		tmp.applyMatrix4(this.cubeSB.matrix);
 		this.seeds.push(tmp.x); this.seeds.push(tmp.y); this.seeds.push(tmp.z);
 	}
-}
+};
 
 WOF.Field.prototype.groupOfLine = function (object) {
 	var group = object.parent;
@@ -143,7 +188,7 @@ WOF.Field.prototype.groupOfLine = function (object) {
 		if (group === this.groups[i].object) break;
 	}
 	return i;
-}
+};
 
 WOF.Field.prototype.indexOfLine = function (object, groupID) {
 	var group = this.groups[groupID];
@@ -151,6 +196,6 @@ WOF.Field.prototype.indexOfLine = function (object, groupID) {
 		if (object === group.streamlines[i].object) break;
 	}
 	return i;
-}
+};
 
 WOF.Field.v1 = new THREE.Vector3();
