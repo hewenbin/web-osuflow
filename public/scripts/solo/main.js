@@ -162,7 +162,7 @@ function onMouseUpPicking(event) {
 function init_os() {
 	// clear remaining data
 	if (webState === 1) {
-		trans_control.detach(field.cubeSB);
+		trans_control.detach(field.currentSB);
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
 	}
@@ -211,10 +211,11 @@ function init_as() {
 	}
 
 	// set seed boundary
-	field.setSeedBoundary();
+	field.setSeedBoundary(field.cubeSB);
+	$("#as-shape-info").html("&nbsp;&nbsp;&nbsp;Cube");
 
 	// attach control
-	trans_control.attach(field.cubeSB);
+	trans_control.attach(field.currentSB);
 	scene.add(trans_control.gizmo);
 }
 
@@ -225,7 +226,7 @@ function init_lic() {
 		field.clearVecs();
 	}
 	else if (webState === 1) {
-		trans_control.detach(field.cubeSB);
+		trans_control.detach(field.currentSB);
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
 	}
@@ -255,7 +256,7 @@ function init_al() {
 		field.clearVecs();
 	}
 	else if (webState === 1) {
-		trans_control.detach(field.cubeSB);
+		trans_control.detach(field.currentSB);
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
 	}
@@ -291,7 +292,7 @@ function init_set() {
 		field.clearVecs();
 	}
 	else if (webState === 1) {
-		trans_control.detach(field.cubeSB);
+		trans_control.detach(field.currentSB);
 		scene.remove(trans_control.gizmo);
 		field.clearSeedBoundary();
 	}

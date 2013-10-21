@@ -21,8 +21,24 @@ WOF.Field = function () {
 	this.mbmRed = new THREE.MeshBasicMaterial({color: 0xe77175, opacity: 0.6});
 	this.mbmRed.transparent = true;
 	this.mbmRed.blending = THREE["NormalBlending"];
+	this.mbmRedDS = new THREE.MeshBasicMaterial({color: 0xe77175, opacity: 0.6, side : THREE.DoubleSide});
+	this.mbmRedDS.transparent = true;
+	this.mbmRedDS.blending = THREE["NormalBlending"];
 	this.geoCubeSB = new THREE.CubeGeometry(1, 1, 1);
 	this.cubeSB = new THREE.Mesh(this.geoCubeSB, this.mbmRed);
+	this.geoSphereSB = new THREE.SphereGeometry(1, 20, 20);
+	this.sphereSB = new THREE.Mesh(this.geoSphereSB, this.mbmRed);
+	this.geoTetrahedronSB = new THREE.TetrahedronGeometry(1, 0);
+	this.tetrahedronSB = new THREE.Mesh(this.geoTetrahedronSB, this.mbmRed);
+	this.geoCylinderSB = new THREE.CylinderGeometry(0.5, 0.5, 1, 20, 1);
+	this.cylinderSB = new THREE.Mesh(this.geoCylinderSB, this.mbmRed);
+	this.geoTorusSB = new THREE.TorusGeometry(1, 0.1, 50, 20);
+	this.torusSB = new THREE.Mesh(this.geoTorusSB, this.mbmRed);
+	this.geoPlaneSB = new THREE.PlaneGeometry(1, 1, 1, 1);
+	this.planeSB = new THREE.Mesh(this.geoPlaneSB, this.mbmRedDS);
+	this.geoCircleSB = new THREE.CircleGeometry(0.5, 32, 0, Math.PI * 2);
+	this.circleSB = new THREE.Mesh(this.geoCircleSB, this.mbmRedDS);
+	this.currentSB = this.cubeSB;
 	// vec
 	this.geoVecs = [];
 	this.vecs = [];
@@ -103,14 +119,17 @@ WOF.Field.prototype.setVecs = function (pos, vecs) {
 };
 
 WOF.Field.prototype.clearSeedBoundary = function () {
-	this.root.remove(this.cubeSB);
+	this.root.remove(this.currentSB);
 };
 
-WOF.Field.prototype.setSeedBoundary = function () {
-	this.cubeSB.position.set(this.bias.x, this.bias.y, this.bias.z);
-	this.cubeSB.rotation.set(0, 0, 0);
-	this.cubeSB.scale.set(8, 8, 8);
-	this.root.add(this.cubeSB);
+WOF.Field.prototype.setSeedBoundary = function (currentSB) {
+	this.clearSeedBoundary();
+	this.currentSB = currentSB;
+
+	this.currentSB.position.set(this.bias.x, this.bias.y, this.bias.z);
+	this.currentSB.rotation.set(0, 0, 0);
+	this.currentSB.scale.set(8, 8, 8);
+	this.root.add(this.currentSB);
 };
 
 WOF.Field.prototype.clearLic = function () {
@@ -172,14 +191,14 @@ WOF.Field.prototype.setColorMethod = function (colorMethod) {
 };
 
 // utility functions
-WOF.Field.prototype.genInCube = function (n) {
+WOF.Field.prototype.genInGeometry = function (geometry, n) {
 	this.seeds.length = 0;
-	var tmp = WOF.Field.v1;
+	var tmp = THREE.GeometryUtils.randomPointsInGeometry(geometry, n);
 	for (var i = 0; i < n; i++) {
-		tmp.set((Math.random() - 0.5), (Math.random() - 0.5), (Math.random() - 0.5));
-		tmp.applyMatrix4(this.cubeSB.matrix);
-		this.seeds.push(tmp.x); this.seeds.push(tmp.y); this.seeds.push(tmp.z);
+		tmp[i].applyMatrix4(this.currentSB.matrix);
+		this.seeds.push(tmp[i].x); this.seeds.push(tmp[i].y); this.seeds.push(tmp[i].z);
 	}
+	tmp.length = 0;
 };
 
 WOF.Field.prototype.groupOfLine = function (object) {

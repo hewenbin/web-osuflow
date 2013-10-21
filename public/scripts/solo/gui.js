@@ -81,6 +81,55 @@ function init_gui() {
 	});
 
 	// init area seed tools
+	$("#as-cube").on('click', function () {
+		trans_control.detach(field.currentSB);
+		field.setSeedBoundary(field.cubeSB);
+		trans_control.attach(field.currentSB);
+		$("#as-shape-info").html("&nbsp;&nbsp;&nbsp;Cube");
+	});
+
+	$("#as-sphere").on('click', function () {
+		trans_control.detach(field.currentSB);
+		field.setSeedBoundary(field.sphereSB);
+		trans_control.attach(field.currentSB);
+		$("#as-shape-info").html("&nbsp;&nbsp;&nbsp;Sphere");
+	});
+
+	$("#as-tetrahedron").on('click', function () {
+		trans_control.detach(field.currentSB);
+		field.setSeedBoundary(field.tetrahedronSB);
+		trans_control.attach(field.currentSB);
+		$("#as-shape-info").html("&nbsp;&nbsp;&nbsp;Tetrahedron");
+	});
+
+	$("#as-cylinder").on('click', function () {
+		trans_control.detach(field.currentSB);
+		field.setSeedBoundary(field.cylinderSB);
+		trans_control.attach(field.currentSB);
+		$("#as-shape-info").html("&nbsp;&nbsp;&nbsp;Cylinder");
+	});
+
+	$("#as-torus").on('click', function () {
+		trans_control.detach(field.currentSB);
+		field.setSeedBoundary(field.torusSB);
+		trans_control.attach(field.currentSB);
+		$("#as-shape-info").html("&nbsp;&nbsp;&nbsp;Torus");
+	});
+
+	$("#as-plane").on('click', function () {
+		trans_control.detach(field.currentSB);
+		field.setSeedBoundary(field.planeSB);
+		trans_control.attach(field.currentSB);
+		$("#as-shape-info").html("&nbsp;&nbsp;&nbsp;Plane");
+	});
+
+	$("#as-circle").on('click', function () {
+		trans_control.detach(field.currentSB);
+		field.setSeedBoundary(field.circleSB);
+		trans_control.attach(field.currentSB);
+		$("#as-shape-info").html("&nbsp;&nbsp;&nbsp;Circle");
+	});
+
 	$("#as-number").slider({min : 1, max : 100, value : 10}).on("slide", function (event) {
 		$("#as-number-info").html("seed number = " + event.value);
 	});
@@ -88,7 +137,7 @@ function init_gui() {
 	$("#as-generate").on('click', function () {
 		$(this).button("loading");
 		$("#os-generate").button("loading");
-		field.genInCube($("#as-number").data('slider').getValue());
+		field.genInGeometry(field.currentSB.geometry ,$("#as-number").data('slider').getValue());
 		socket.emit("genStreamLines", {
 			seeds : field.seeds,
 			direction : $("#set-td label.active input").val(),

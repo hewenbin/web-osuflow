@@ -81,7 +81,24 @@
 		</div>
 
 		<div id="tool-as" class="tools">
-			<h2 class="wof">Area Seeds</h2>
+			<h2 class="wof">Area Shape</h2>
+			<div class="btn-group" style="margin-top: 10px;">
+				<button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+					choose a shape
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a id="as-cube" href="#">cube</a></li>
+					<li><a id="as-sphere" href="#">sphere</a></li>
+					<li><a id="as-tetrahedron" href="#">tetrahedron</a></li>
+					<li><a id="as-cylinder" href="#">cylinder</a></li>
+					<li><a id="as-torus" href="#">torus</a></li>
+					<li><a id="as-plane" href="#">plane</a></li>
+					<li><a id="as-circle" href="#">circle</a></li>
+				</ul>
+				<strong id="as-shape-info" class="wof">&nbsp;&nbsp;&nbsp;Cube</strong>
+			</div>
+			<h2 class="wof">Seed Number</h2>
 			<p id="as-number-info" class="wof">seed number = 10</p>
 			<div class="slider-container">
 				<input id="as-number" type="text" data-slider-step="1" data-slider-tooltip="hide">
