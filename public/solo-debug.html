@@ -9,6 +9,29 @@
 		<link rel="stylesheet" href="styles/bootstrap-slider.css">
 		<link rel="stylesheet" href="styles/wof-typography.css">
 		<link rel="stylesheet" href="styles/wof-layout.css">
+
+		<!-- d3 style -->
+		<style>
+		.bar rect {
+			fill: steelblue;
+			shape-rendering: crispEdges;
+		}
+
+		.bar text {
+			fill: #000;
+			font-size: 10px;
+		}
+
+		.axis path, .axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+
+		.axis text {
+			font-size: 8px;
+		}
+		</style>
 	</head>
 
 	<body>
@@ -154,6 +177,7 @@
 				<button id="al-delta" type="button" class="btn btn-primary btn-xs">delta</button>
 				<button id="al-gamma2" type="button" class="btn btn-primary btn-xs">gamma2</button>
 			</div>
+			<div id="viewer-d3"></div>
 		</div>
 
 		<div id="tool-set" class="tools">
@@ -201,6 +225,7 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
 		<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.min.js"></script>
 		<script src="scripts/lib/EditorControls.js"></script>
 		<script src="scripts/lib/TransformControls.js"></script>

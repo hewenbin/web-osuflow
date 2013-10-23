@@ -173,6 +173,9 @@ function init_os() {
 		field.setColorMethod(field.colorMethod);
 		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
 		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
+
+		// clear svg
+		d3.select('svg').remove();
 	}
 
 	// init seed position
@@ -208,6 +211,9 @@ function init_as() {
 		field.setColorMethod(field.colorMethod);
 		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
 		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
+
+		// clear svg
+		d3.select('svg').remove();
 	}
 
 	// set seed boundary
@@ -234,6 +240,9 @@ function init_lic() {
 		field.setColorMethod(field.colorMethod);
 		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
 		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
+
+		// clear svg
+		d3.select('svg').remove();
 	}
 
 	// set lic position gui
@@ -303,5 +312,8 @@ function init_set() {
 		field.setColorMethod(field.colorMethod);
 		renderer.domElement.removeEventListener('mousedown', onMouseDownPicking, false);
 		renderer.domElement.removeEventListener('mouseup', onMouseUpPicking, false);
+
+		// clear svg
+		d3.select('svg').remove();
 	}
 }
