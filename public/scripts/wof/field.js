@@ -110,11 +110,13 @@ WOF.Field.prototype.clearVecs = function () {
 
 WOF.Field.prototype.setVecs = function (pos, vecs) {
 	this.clearVecs();
+	var length = Math.min(this.bias.x, this.bias.y, this.bias.z) / 2;
 	for (var i = 0, il = vecs.length / 3; i < il; i++) {
 		this.geoVecs.push(new THREE.Vector3(vecs[i * 3], vecs[i * 3 + 1], vecs[i * 3 + 2]));
-		var length = this.geoVecs[i].length() * 30;
-		this.vecs.push(new THREE.ArrowHelper(this.geoVecs[i].normalize(), new THREE.Vector3(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]), length, 0xe77175));
-		this.root.add(this.vecs[i]);
+		if (this.geoVecs[i].length() > 0.000005) {
+			this.vecs.push(new THREE.ArrowHelper(this.geoVecs[i].normalize(), new THREE.Vector3(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]), length, 0xe77175));
+			this.root.add(this.vecs[i]);
+		}
 	}
 };
 
@@ -128,7 +130,8 @@ WOF.Field.prototype.setSeedBoundary = function (currentSB) {
 
 	this.currentSB.position.set(this.bias.x, this.bias.y, this.bias.z);
 	this.currentSB.rotation.set(0, 0, 0);
-	this.currentSB.scale.set(8, 8, 8);
+	var scale = Math.min(this.bias.x, this.bias.y, this.bias.z) / 2;
+	this.currentSB.scale.set(scale, scale, scale);
 	this.root.add(this.currentSB);
 };
 

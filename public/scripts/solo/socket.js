@@ -35,6 +35,7 @@ socket.on("boundary", function (data) {
 
 	// set camera
 	camera.position.z = field.min.distanceTo(field.max) * 1.4;
+	raycaster.linePrecision = camera.position.z * 0.003;
 
 	// init one seed tool
 	init_os();
@@ -52,10 +53,10 @@ socket.on("boundary", function (data) {
 socket.on("seedInfo", function (data) {
 	field.setVecs(data.pos, data.vec);
 
-	$("#os-l-info").html("lambda2 = " + data.lqdg[0].toFixed(6));
-	$("#os-q-info").html("q = " + data.lqdg[1].toFixed(6));
-	$("#os-d-info").html("delta = " + data.lqdg[2].toFixed(6));
-	$("#os-g-info").html("gamma2 = " + data.lqdg[3].toFixed(6));
+	$("#os-l-info").html("lambda2 = " + data.lqdg[0].toExponential(3));
+	$("#os-q-info").html("q = " + data.lqdg[1].toExponential(3));
+	$("#os-d-info").html("delta = " + data.lqdg[2].toExponential(3));
+	$("#os-g-info").html("gamma2 = " + data.lqdg[3].toExponential(3));
 	if (data.lqdg[0] < -0.000001) {
 		$("#os-l-label").removeClass("label-success").addClass("label-danger").html("Vortex");
 	}
@@ -97,15 +98,15 @@ socket.on("measurements", function (data) {
 
 	if (line === currentLine) {
 		$("#al-analyzed-info").html("analyzed = true");
-		$("#al-curvature-info").html("curvature = " + Math.min.apply(Math, currentLine.curvature).toFixed(6) +
-			" ~ " + Math.max.apply(Math, currentLine.curvature).toFixed(6));
-		$("#al-lambda2-info").html("lambda2 = " + Math.min.apply(Math, currentLine.lambda2).toFixed(6) +
-			" ~ " + Math.max.apply(Math, currentLine.lambda2).toFixed(6));
-		$("#al-q-info").html("q = " + Math.min.apply(Math, currentLine.q).toFixed(6) +
-			" ~ " + Math.max.apply(Math, currentLine.q).toFixed(6));
-		$("#al-delta-info").html("delta = " + Math.min.apply(Math, currentLine.delta).toFixed(6) +
-			" ~ " + Math.max.apply(Math, currentLine.delta).toFixed(6));
-		$("#al-gamma2-info").html("gamma2 = " + Math.min.apply(Math, currentLine.gamma2).toFixed(6) +
-			" ~ " + Math.max.apply(Math, currentLine.gamma2).toFixed(6));
+		$("#al-curvature-info").html("curvature = " + Math.min.apply(Math, currentLine.curvature).toExponential(3) +
+			" ~ " + Math.max.apply(Math, currentLine.curvature).toExponential(3));
+		$("#al-lambda2-info").html("lambda2 = " + Math.min.apply(Math, currentLine.lambda2).toExponential(3) +
+			" ~ " + Math.max.apply(Math, currentLine.lambda2).toExponential(3));
+		$("#al-q-info").html("q = " + Math.min.apply(Math, currentLine.q).toExponential(3) +
+			" ~ " + Math.max.apply(Math, currentLine.q).toExponential(3));
+		$("#al-delta-info").html("delta = " + Math.min.apply(Math, currentLine.delta).toExponential(3) +
+			" ~ " + Math.max.apply(Math, currentLine.delta).toExponential(3));
+		$("#al-gamma2-info").html("gamma2 = " + Math.min.apply(Math, currentLine.gamma2).toExponential(3) +
+			" ~ " + Math.max.apply(Math, currentLine.gamma2).toExponential(3));
 	}
 });

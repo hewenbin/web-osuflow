@@ -190,9 +190,9 @@ function init_os() {
 	$("#os-z").slider("setValue", field.seeds[2]);
 
 	// set seed position info
-	$("#os-x-info").html("x = " + field.seeds[0] + " ");
-	$("#os-y-info").html("y = " + field.seeds[1] + " ");
-	$("#os-z-info").html("z = " + field.seeds[2] + " ");
+	$("#os-x-info").html("x = " + field.seeds[0].toFixed(2) + " ");
+	$("#os-y-info").html("y = " + field.seeds[1].toFixed(2) + " ");
+	$("#os-z-info").html("z = " + field.seeds[2].toFixed(2) + " ");
 
 	// get seed info
 	socket.emit("seedInfo", field.seeds);
