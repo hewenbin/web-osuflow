@@ -11,6 +11,7 @@ WOF.Field = function () {
 	// boundary
 	this.min = new THREE.Vector3();
 	this.max = new THREE.Vector3();
+	this.size = new THREE.Vector3();
 	this.bias = new THREE.Vector3();
 	this.geoBoundary = new THREE.Geometry();
 	this.boundary = undefined;
@@ -65,6 +66,7 @@ WOF.Field.prototype.setBoundary = function (min, max) {
 	// set min, max and bias
 	this.min.set(min[0], min[1], min[2]);
 	this.max.set(max[0], max[1], max[2]);
+	this.size.subVectors(this.max, this.min);
 	this.bias.addVectors(this.min, this.max);
 	this.bias.divideScalar(2);
 
@@ -110,7 +112,7 @@ WOF.Field.prototype.clearVecs = function () {
 
 WOF.Field.prototype.setVecs = function (pos, vecs) {
 	this.clearVecs();
-	var length = Math.min(this.bias.x, this.bias.y, this.bias.z) / 2;
+	var length = Math.min(this.size.x, this.size.y, this.size.z) / 3;
 	for (var i = 0, il = vecs.length / 3; i < il; i++) {
 		this.geoVecs.push(new THREE.Vector3(vecs[i * 3], vecs[i * 3 + 1], vecs[i * 3 + 2]));
 		if (this.geoVecs[i].length() > 0.000005) {
@@ -130,7 +132,7 @@ WOF.Field.prototype.setSeedBoundary = function (currentSB) {
 
 	this.currentSB.position.set(this.bias.x, this.bias.y, this.bias.z);
 	this.currentSB.rotation.set(0, 0, 0);
-	var scale = Math.min(this.bias.x, this.bias.y, this.bias.z) / 2;
+	var scale = Math.min(this.size.x, this.size.y, this.size.z) / 3;
 	this.currentSB.scale.set(scale, scale, scale);
 	this.root.add(this.currentSB);
 };
