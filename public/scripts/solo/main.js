@@ -22,7 +22,7 @@ function init_three() {
 	container = document.getElementById("viewer");
 
 	// init renderer
-	renderer = new THREE.WebGLRenderer({antialias : true});
+	renderer = new THREE.WebGLRenderer({antialias : true, alpha : true});
 	renderer.setClearColor(new THREE.Color(0x000000), 0);
 	renderer.setSize(container.offsetWidth, container.offsetHeight);
 	container.appendChild(renderer.domElement);
